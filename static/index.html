@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>妇儿医院</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="keywords" content="xxxx" />
+    <meta name="description" content="" />
+    <meta name="copyright" content="Copyright &copy;dialog " />
+    <link rel="stylesheet" href="css/chat.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    window.addEventListener(('orientationchange' in window ? 'orientationchange' : 'resize'), (function() {
+        function c() {
+            var d = document.documentElement;
+            var cw = d.clientWidth || 750;
+            d.style.fontSize = (20 * (cw / 375)) > 40 ? 40 + 'px' : (20 * (cw / 375)) + 'px';
+        }
+
+        c();
+        return c;
+    })(), false);
+    </script>
+    <script>
+     window.onload = function() {
+        var socket = io.connect(), //与服务器进行连接
+            button = document.getElementById('send');
+        button.onclick = function() {
+
+            socket.emit('message', document.getElementById("talk").value); //发送一个名为foo的事件，并且传递一个字符串数据‘hello’
+            document.getElementById("talk").value='';   
+
+        }
+        socket.on('message', function(data,className) {
+            console.log(data);
+           console.log(className);
+           var chat_item=document.createElement("div");
+           chat_item.className="chat-item";
+
+           var h3=document.createElement("h3");
+           var today=new Date();
+           h3.innerHTML=today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+           chat_item.appendChild(h3);
+
+           var chat=document.createElement("div");
+
+           chat.className="chat "+className;
+            var img=document.createElement("img");
+            img.src="images/tab_daoyitai@3x.png";
+            chat.appendChild(img);
+            var p=document.createElement("p");
+            var span=document.createElement("span");
+            span.innerHTML=data!=''?data:'&nbsp';
+            p.appendChild(span);
+            chat.appendChild(p);
+            chat_item.appendChild(chat);
+            var clear_both=document.createElement("div");
+            clear_both.className="clear";
+            document.querySelector(".chat-main").appendChild(clear_both);
+            document.querySelector(".chat-main").appendChild(chat_item);
+            console.log(document.querySelector(".chat-main").lastChild.offsetTop);
+            document.querySelector(".chat-main").scrollTop=document.querySelector(".chat-main").lastChild.offsetTop;
+            
+        });
+    }
+    </script>
+</head>
+
+<body>
+    <header class="chat-header">
+    </header>
+    <section class="chat-main" id="chat_main">
+      
+    </section>
+    <footer class="chat-text">
+        <button id="send" >发送</button><input type="text" id="talk"/><i>+</i>
+    </footer>
+</body>
+
+</html>

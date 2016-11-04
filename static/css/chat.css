@@ -1,0 +1,170 @@
+    html,
+    body,
+    section,
+    ul,
+    div,
+    li,
+    h1,
+    p,
+    h2,
+    h3,
+    h4,input,footer,header {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        list-style-type: none;
+
+    }
+    input,button,select,textarea{outline:none;border: none}
+    body,html{
+        background: #f0f0ff;
+    }
+    .chat-header{
+        width: 100%;
+        height: 2.2rem;
+        background: #000;
+        position: fixed;
+        z-index: 1;
+    }
+    .chat-main {
+        width: 100%;
+        height: 87%;
+        
+        border: 1px solid black;
+        border-bottom: none;
+        position: fixed;
+        padding: .5rem;
+        margin:2.2rem 0 0;
+        padding:0 .5rem 2.2rem;
+        overflow-y: auto;
+    }
+    
+    .chat-item h3 {
+        font-weight: normal;
+        font-size: .6rem;
+        line-height: 1.5rem;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+    
+    .chat {
+        margin-bottom: .5rem;
+    }
+    
+    .chat img {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+    
+    .left {
+        margin-right: 1rem;
+    }
+    
+    .left img {
+        float: left;
+    }
+    
+    .right {
+        margin-left: 1rem;
+    }
+    
+    .right img {
+        float: right;
+    }
+    
+    .left p {
+        margin-left: 2.6rem;
+    }
+    
+    .right p {
+        margin-right: .4rem;
+        float: right;
+        max-width: 79%;
+    }
+    
+    .chat p span {
+        font-size: .6rem;
+        line-height: 1rem;
+        background: #ffe684;
+        padding: .5rem .7rem .5rem .5rem;
+        margin-top: .1rem;
+        position: relative;
+        display: inline-block;
+        border-radius: 4px;
+        letter-spacing: 1px;
+    }
+    
+    .chat p span:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 0;
+        content: ' ';
+        width: 0.45rem;
+        border: 10px solid transparent;
+        top: 0.3rem;
+    }
+    
+    .left p span:before {
+        left: -1.3rem;
+        border-right-color: #ffe684
+    }
+    
+    .right p span:before {
+        right: -1.3rem;
+        border-left-color: #ffe684
+    }
+    .chat-text{
+        height: 2.4rem;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background: #CCFFCC;
+        border: 1px solid black;
+        border-top:none;
+        box-sizing: border-box;
+        line-height: 2.1rem;
+        vertical-align: middle;
+        padding:0 .5rem;
+    }
+     .chat-text input{
+        border-radius: 4px;
+        background: #fff;
+        width: 13rem;
+        height: 1.8rem;
+        line-height: 1.8rem;
+        margin: .3rem .5rem;
+        padding:0 .5rem;
+        float: right;
+        font-size: .6rem;
+        letter-spacing: 1px;
+     }
+      .chat-text i{
+        background: #339900;
+        width: 1.7rem;
+        height: 1.7rem;
+        float: right;
+        position: absolute;
+         margin-top:.3rem; 
+         border-radius: 50%;
+         line-height: 1.7rem;
+         text-align: center;
+         font-style: normal;
+         font-size: 1.3rem;
+      }
+     .chat-text button{
+        height: 1.7rem;
+        line-height: 1.7rem;
+        background:#339900;
+        width: 2rem;
+        border-radius: 4px;
+        float: right;
+        margin-top:.3rem; 
+        font-size: .6rem;
+        letter-spacing: 1px;
+     }
+.clear{
+    clear:both;
+}
