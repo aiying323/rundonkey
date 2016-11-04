@@ -1,20 +1,54 @@
-    var express = require('express'), //ÒıÈëexpressÄ£¿é
+    var express = require('express'), //å¼•å…¥expressæ¨¡å—
     app = express(),
     server = require('http').createServer(app);
-    io = require('socket.io').listen(server); //ÒıÈësocket.ioÄ£¿é²¢°ó¶¨µ½·şÎñÆ÷
+    io = require('socket.io').listen(server); //å¼•å…¥socket.ioæ¨¡å—å¹¶ç»‘å®šåˆ°æœåŠ¡å™¨
 
-    app.use('/', express.static(__dirname + '/static')); //Ö¸¶¨¾²Ì¬HTMLÎÄ¼şµÄÎ»ÖÃ
+    app.use('/', express.static(__dirname + '/static')); //æŒ‡å®šé™æ€HTMLæ–‡ä»¶çš„ä½ç½®
     server.listen(80);
+
+    var mongodb =require('mongodb');
+    var server = new mongodb.Server('localhost', 27017, {auto_reconnect:true});
+    var db = new mongodb.Db('test', server, {safe:true});
     console.log('server started');
-    //socket²¿·Ö
+    var messages=[];
+    //socketéƒ¨åˆ†
     io.on('connection', function(socket) {
-        //½ÓÊÕ²¢´¦Àí¿Í»§¶Ë·¢ËÍµÄfooÊÂ¼ş
+        //æ¥æ”¶å¹¶å¤„ç†å®¢æˆ·ç«¯å‘é€çš„fooäº‹ä»¶
         socket.on('message', function(data) {
-            //½«ÏûÏ¢Êä³öµ½¿ØÖÆÌ¨
+            //å°†æ¶ˆæ¯è¾“å‡ºåˆ°æ§åˆ¶å°
             console.log(data);
+            var message={"name":"jetty","message":data};
+            db.open(function(err, db){
+                if(!err){
+                    db.createCollection('message', {safe:true}, function(err, collection){
+                        if(err){
+                            console.log(err);
+                        }else{
+                            collection.insert(message,{safe:true},function(err,result){
+                                console.log(result);
+                            });
+                            collection.find().toArray(function(err,docs){
+                               console.log('find');
+                               console.log(docs);
+                               messages=docs;
+                               db.close();
+                            }); 
+
+                        }
+                    });
+
+                }else{
+                    console.log(err);
+                }
+            });
+           // db.close();
             socket.broadcast.emit("message", data, 'left');
             socket.emit("message", data, 'right');
         })
     });
-       
+     db.on("close", function (err,db) {//å…³é—­æ•°æ®åº“
+     if(err) throw err;
+     else console.log("æˆåŠŸå…³é—­æ•°æ®åº“.");
+ });
+   
     
