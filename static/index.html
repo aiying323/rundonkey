@@ -45,6 +45,7 @@
                 console.log('访问的IP：'+ip);
                 console.log("存储的IP"+element.ip);
                 console.log('我两相等吗'+(ip===element.ip));
+                console.log('我发的内容是：'+element.message);
                 var className='left';
                 if(ip===element.ip){
                     className="right";
@@ -59,7 +60,6 @@
             
         });
         function chat(data,className){
-            console.log(data.ip);
             var chat_item=document.createElement("div");
            chat_item.className="chat-item";
 
