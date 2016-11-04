@@ -30,21 +30,37 @@
      window.onload = function() {
         var socket = io.connect(), //与服务器进行连接
             button = document.getElementById('send');
+            socket.emit('messages', '');   
         button.onclick = function() {
 
             socket.emit('message', document.getElementById("talk").value); //发送一个名为foo的事件，并且传递一个字符串数据‘hello’
-            document.getElementById("talk").value='';   
+            document.getElementById("talk").value=''; 
+
 
         }
-        socket.on('message', function(data,className) {
+        socket.on('messages', function(data,ip) {
             console.log(data);
-           console.log(className);
-           var chat_item=document.createElement("div");
+           
+            data.forEach( function(element, index) {
+                var className='left';
+                if(ip===element.ip){
+                    className="right";
+
+                }
+                chat(element,className);
+            });
+        });
+        socket.on('message', function(data,className) {
+            chat(data,className);
+            
+        });
+        function chat(data,className){
+            var chat_item=document.createElement("div");
            chat_item.className="chat-item";
 
            var h3=document.createElement("h3");
-           var today=new Date();
-           h3.innerHTML=today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+           h3.innerHTML=data.time;
+           //today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
            chat_item.appendChild(h3);
 
            var chat=document.createElement("div");
@@ -55,7 +71,7 @@
             chat.appendChild(img);
             var p=document.createElement("p");
             var span=document.createElement("span");
-            span.innerHTML=data!=''?data:'&nbsp';
+            span.innerHTML=data!=''?data.message:'&nbsp';
             p.appendChild(span);
             chat.appendChild(p);
             chat_item.appendChild(chat);
@@ -65,8 +81,7 @@
             document.querySelector(".chat-main").appendChild(chat_item);
             console.log(document.querySelector(".chat-main").lastChild.offsetTop);
             document.querySelector(".chat-main").scrollTop=document.querySelector(".chat-main").lastChild.offsetTop;
-            
-        });
+        }
     }
     </script>
 </head>
