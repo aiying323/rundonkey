@@ -21,7 +21,7 @@
                             if(err){
                                 console.log(err);
                             }else{
-                                collection.find({"ip":{$ne:null}}).sort({"time":-1}).toArray(function(err,docs){
+                                collection.find({"ip":{$ne:null}}).sort({"time":1}).toArray(function(err,docs){
                                   // console.log('find');
                                    //console.log(docs);
                                    docs.forEach( function(element, index) {
